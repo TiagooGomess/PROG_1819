@@ -7,6 +7,9 @@
 
 using namespace std;
 
+Address::Address(){
+};
+
 Address::Address(string address){
     vector<string> address_fields = separate_string(address, '/');
     this->street = address_fields.at(0);

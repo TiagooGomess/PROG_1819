@@ -30,3 +30,15 @@ vector<string> separate_string(string str, char separator){
 
     return str_fields;
 }
+
+vector<int> convert_vector_str_to_int(vector<string> v){
+    vector<int> vec;
+    string temp;
+    for (size_t i = 0; i < v.size(); i++){
+        temp = "";
+        temp = v.at(i);
+        trim(temp);
+        vec.push_back(stoi(temp));
+    }
+    return vec;
+}

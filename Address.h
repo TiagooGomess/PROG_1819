@@ -8,6 +8,7 @@ using namespace std;
 class Address
 {
     public:
+        Address();
         Address(string address);
         Address(string street, unsigned int door_number, string floor, string zip_code, string city);
         string getStreet() const;
