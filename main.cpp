@@ -7,6 +7,7 @@
 using namespace std;
 
 int main(){
-
+    Address address = Address("Rua dos Galos / 34 /  -  / 3456-789 / Filipinas");
+    address.show();
     return 0;
 }

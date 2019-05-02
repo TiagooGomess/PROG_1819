@@ -21,6 +21,7 @@ class Address
         void setZipCode(string zip_code);
         void setCity(string city);
         void show() const;
+        bool isValid() const;
 
     private:
         string street;
@@ -28,5 +29,5 @@ class Address
         string floor;
         string zip_code;
         string city;
-
+        bool isValidZipCode(string zip_code) const;
 };
