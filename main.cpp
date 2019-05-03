@@ -8,6 +8,6 @@ using namespace std;
 
 int main(){
     Address address = Address("Rua dos Galos / 34 /  -  / 3456-789 / Filipinas");
-    address.show();
+    cout << address << endl;
     return 0;
 }

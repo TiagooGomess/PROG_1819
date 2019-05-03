@@ -20,8 +20,9 @@ class Address
         void setFloor(string floor);
         void setZipCode(string zip_code);
         void setCity(string city);
-        void show() const;
         bool isValid() const;
+
+        friend ostream& operator<<(ostream& out, const Address & address);
 
     private:
         string street;

@@ -68,10 +68,6 @@ void Address::setCity(string city){
     this->city = city;
 }
 
-void Address::show() const{
-    cout << getStreet() << " / " << getDoorNumber() << " / " << getFloor() << " / " << getZipCode() << " / " << getCity() << endl;
-}
-
 bool Address::isValid() const{
     if (getStreet() != "" && getFloor() != "" && isValidZipCode(getZipCode()) && getCity() != "")
         return true;
@@ -90,4 +86,8 @@ bool Address::isValidZipCode(string zip) const{
         return false;
     }
     return true;
+}
+
+ostream& operator<<(ostream& out, const Address & address){
+    out << address.street << "  /  " << address.door_number << "  /  " << address.floor << "  /  " << address.zip_code << "  /  " << address.city << "  ";
 }
