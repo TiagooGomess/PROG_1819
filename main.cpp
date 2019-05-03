@@ -1,4 +1,5 @@
 #include "Address.h"
+#include "Date.h"
 #include "aux_funcs.h"
 #include <iostream>
 #include <vector>
@@ -7,7 +8,7 @@
 using namespace std;
 
 int main(){
-    Address address = Address("Rua dos Galos / 34 /  -  / 3456-789 / Filipinas");
-    cout << address << endl;
+    Date date("2019/08/23");
+    cout << date << endl;
     return 0;
 }
