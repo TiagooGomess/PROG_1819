@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Address::Address(){
+Address::Address() {
 };
 
 Address::Address(string address){

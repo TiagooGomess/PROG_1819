@@ -1,5 +1,7 @@
 #include "Address.h"
 #include "Date.h"
+#include "Pack.h"
+#include "Client.h"
 #include "aux_funcs.h"
 #include <iostream>
 #include <vector>
