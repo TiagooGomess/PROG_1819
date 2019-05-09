@@ -42,3 +42,21 @@ vector<int> convert_vector_str_to_int(vector<string> v){
     }
     return vec;
 }
+
+vector<string> parse_places(string all_places) {
+	// Creates a vector of strings representing places from an original string containing all of them separated by commas
+	vector<string> places;
+	all_places += ',';
+	string temp = "";
+	for (unsigned int i = 0; i < all_places.size(); i++) {
+		if (all_places[i] == '-' || all_places[i] == ',') {
+			trim(temp);
+			places.push_back(temp);
+			temp = "";
+		}
+		else {
+			temp += all_places[i];
+		}
+	}
+	return places;
+}

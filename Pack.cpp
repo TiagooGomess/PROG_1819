@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Pack::Pack(unsigned int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people){
+Pack::Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people){
     this->id = id;
     this->places = places;
     this->beginning_date = beginning_date;
@@ -16,7 +16,7 @@ Pack::Pack(unsigned int id, vector<string> places, Date beginning_date, Date end
     this->max_num_people = max_num_people;
 }
 
-unsigned int Pack::getId() const{
+int Pack::getId() const{
     return this->id;
 }
 
@@ -40,7 +40,7 @@ unsigned int Pack::getMaxNumPeople() const{
     return this->max_num_people;
 }
 
-void Pack::setId(unsigned int id){
+void Pack::setId(int id){
     this->id = id;
 }
 

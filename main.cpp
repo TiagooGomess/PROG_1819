@@ -1,4 +1,5 @@
 #include "Address.h"
+#include "Agency.h"
 #include "Date.h"
 #include "Pack.h"
 #include "Client.h"
@@ -10,7 +11,7 @@
 using namespace std;
 
 int main(){
-    Date date("2019/08/23");
-    cout << date << endl;
+    Agency agency("agency.txt");
+    cout << agency;
     return 0;
 }

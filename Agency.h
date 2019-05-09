@@ -15,11 +15,11 @@ using namespace std;
 class Agency {
 private:
 	string name; 
-	unsigned int nif; 
+	string nif; 
 	Address address; 
 	string URL; 
 	vector<Client> clients; 
-	vector<Pack> packets;
+	vector<Pack> packs;
 
 	bool clientsInfoHasChanged; // flag that is set to "true" if at least one client has been changed/added/deleted
 	bool packetsInfoHasChanged; // flag that is set to "true" if at least one packet has been changed/added/deleted
@@ -31,7 +31,7 @@ public:
 
 	// methods GET
 	string getName() const;
-	unsigned getNif() const;
+	string getNif() const;
 	Address getAddress() const;
 	string getURL() const;
 	vector<Client> getClients() const;
@@ -40,7 +40,7 @@ public:
 
 	// methods SET
 	void setName(string name);
-	void setNif(unsigned nif);
+	void setNif(string nif);
 	void setAddress(Address address);
 	void setURL(string url);
 	void setClients(vector<Client>& clients);

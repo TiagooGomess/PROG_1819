@@ -9,7 +9,7 @@ using namespace std;
 
 class Pack{
  private:
-  unsigned int id;
+  int id;
   vector<string> places;
   Date beginning_date;
   Date end_date;
@@ -17,10 +17,10 @@ class Pack{
   unsigned int max_num_people;
   
  public:
-  Pack(unsigned int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people);
+  Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people);
 
   // Getters
-  unsigned int getId() const;
+  int getId() const;
   vector<string> getPlaces() const;
   Date getBeginningDate() const;
   Date getEndDate() const;
@@ -28,7 +28,7 @@ class Pack{
   unsigned int getMaxNumPeople() const;
 
   // Setters
-  void setId(unsigned int id);  // to set negatve if "deprecated"
+  void setId(int id);  // to set negatve if "deprecated"
   void setPlaces(vector<string> places);
   void setBeginningDate(Date beginning_date);
   void setEndDate(Date end_date);
