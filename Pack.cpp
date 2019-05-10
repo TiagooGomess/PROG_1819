@@ -71,5 +71,6 @@ ostream& operator<<(ostream& out, const Pack & pack){
     for (size_t i = 0; i < pack.places.size(); i++)
         temp += pack.places.at(i) + ", ";
     temp = temp.substr(0, temp.size()-2);
-    out << temp << "  /  " << pack.beginning_date << "  /  " << pack.end_date << "  /  " << pack.price_per_person << "  /  " << pack.max_num_people << "  ";
+    out << temp << "  /  " << pack.beginning_date << "  /  " << pack.end_date << "  /  " << to_string(pack.price_per_person) << "  /  " << to_string(pack.max_num_people) << "  ";
+    return out;
 }

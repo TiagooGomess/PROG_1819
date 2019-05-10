@@ -78,4 +78,5 @@ ostream& operator<<(ostream& out, const Client& client) {
 	}
 	pack_ids = pack_ids.substr(0, pack_ids.size() - 2);
 	out << pack_ids << "  |  " << client.total_buys << "  ";
+	return out;
 }

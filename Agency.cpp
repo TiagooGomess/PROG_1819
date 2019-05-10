@@ -25,7 +25,9 @@ Agency::Agency(string filename) {
 	string name, nif, packs, address_str, not_used;
 	unsigned int total_buys, num_people;
 	vector<Client> clients_vector;
-	f.open(filename);
+	vector<string> ids;
+	vector<int> pack_ids;
+	f.open(clients_filename);
 	if (f.is_open()) {
 		while (!f.eof()) {
 			getline(f, name);
@@ -41,14 +43,8 @@ Agency::Agency(string filename) {
 			getline(f, not_used);
 			Address address(address_str);
 			packs += ";";
-			stringstream s(packs);
-			int id;
-			vector<int> pack_ids;
-			while(s >> id){
-				pack_ids.push_back(id);
-				s.clear();
-				s.ignore(1000, ' ');
-			}
+			ids = separate_string(packs, ';');
+			pack_ids = convert_vector_str_to_int(ids);
 			Client client(name, nif, num_people, address, pack_ids, total_buys);
 			clients_vector.push_back(client);
 		}
