@@ -18,7 +18,7 @@ class Pack{
   unsigned int already_sold;
   
  public:
-  Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people);
+  Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people, unsigned int already_sold);
 
   // Getters
   int getId() const;
@@ -27,7 +27,7 @@ class Pack{
   Date getEndDate() const;
   double getPricePerPerson() const;
   unsigned int getMaxNumPeople() const;
-  unsigned int getAlreadySold()
+  unsigned int getAlreadySold() const;
 
   // Setters
   void setId(int id);  // to set negatve if "deprecated"
@@ -36,6 +36,7 @@ class Pack{
   void setEndDate(Date end_date);
   void setPricePerPerson(double price_per_person);
   void setMaxNumPeople(unsigned int max_num_people);
+  void setAlreadySold(unsigned int already_sold);
 
 
   friend ostream& operator<<(ostream& out, const Pack & pack);

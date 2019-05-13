@@ -7,13 +7,14 @@
 
 using namespace std;
 
-Pack::Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people){
+Pack::Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people, unsigned int already_sold){
     this->id = id;
     this->places = places;
     this->beginning_date = beginning_date;
     this->end_date = end_date;
     this->price_per_person = price_per_person;
     this->max_num_people = max_num_people;
+    this->already_sold = already_sold;
 }
 
 int Pack::getId() const{
@@ -40,6 +41,10 @@ unsigned int Pack::getMaxNumPeople() const{
     return this->max_num_people;
 }
 
+unsigned int Pack::getAlreadySold() const{
+    return this->already_sold;
+}
+
 void Pack::setId(int id){
     this->id = id;
 }
@@ -64,7 +69,10 @@ void Pack::setMaxNumPeople(unsigned int max_num_people){
     this->max_num_people = max_num_people;
 }
 
-// Not Tested Yet
+void Pack::setAlreadySold(unsigned int already_sold){
+    this->already_sold = already_sold;
+}
+
 ostream& operator<<(ostream& out, const Pack & pack){
     out << pack.id << "  /  ";
     string temp = "";

@@ -76,7 +76,7 @@ Agency::Agency(string filename) {
 			f.clear();
 			f.ignore(1000, '\n');
 			getline(f, not_used);
-			Pack pack(id, places_vector, beginning_date, end_date, price_per_person, num_spots);
+			Pack pack(id, places_vector, beginning_date, end_date, price_per_person, num_spots, already_sold);
 			packs_vector.push_back(pack);
 		}
 		f.close();
@@ -157,6 +157,7 @@ bool Agency::update_clients_file() const{
 			f << ids << "\n" << this->clients.at(i).getTotal_buys() << "\n";
 			if (i != this->clients.size() - 1)
 				f << "::::::::::" << "\n";
+			ids = "";
 		}
 		f.close();
 		return true;
@@ -179,8 +180,14 @@ bool Agency::update_packs_file() const{
 				else
 					places_str += ", ";
 			}
-			places_str = places_str.substr(0, places_str.size() - 3);
-			f << places_str << "\n" << this->packs.at(i).getBeginningDate() << "\n" << this->packs.at(i).getEndDate() << "\n" << this->packs.at(i).getPricePerPerson() << "\n" << this->packs.at(i).getMaxNumPeople() << "\n"
+			places_str = places_str.substr(0, places_str.size() - 2);
+			f << places_str << "\n" << this->packs.at(i).getBeginningDate() << "\n" << this->packs.at(i).getEndDate() << "\n" << this->packs.at(i).getPricePerPerson() << "\n" << this->packs.at(i).getMaxNumPeople() << "\n" << this->packs.at(i).getAlreadySold() << "\n";
+			if (i != this->packs.size() - 1)
+				f << "::::::::::" << "\n";
+			places_str = "";
 		}
+		f.close();
+		return true;
 	}
+	return false;
 }

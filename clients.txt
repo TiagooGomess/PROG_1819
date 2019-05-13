@@ -9,12 +9,12 @@ Belmiro Miguel
 111987666
 2
 Avenida dos Grilos  /  100  /  -  /  2300-101  /  Coimbra  
-10100
+100
 1300
 ::::::::::
 Antonio Aurelio
 123456789
 4
 Rua dos Drogados  /  100  /  -  /  4534-785  /  Lourosa  
-10100234; 67; 13
+234; 67; 13
 1000

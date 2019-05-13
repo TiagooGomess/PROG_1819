@@ -12,6 +12,7 @@ using namespace std;
 
 int main(){
     Agency agency("agency.txt");
-    bool sdsadas = agency.update_clients_file();
+    bool aodkso = agency.update_clients_file();
+    bool sdsadas = agency.update_packs_file();
     return 0;
 }
