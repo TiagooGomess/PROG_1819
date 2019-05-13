@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
@@ -16,9 +17,9 @@ Date::Date(){
 Date::Date(string date){
     vector<string> separated_date = separate_string(date, '/');
     vector<int> date_fields = convert_vector_str_to_int(separated_date);
-    this->year = date_fields.at(0);
+    this->year = date_fields.at(2);
     this->month = date_fields.at(1);
-    this->day = date_fields.at(2);
+    this->day = date_fields.at(0);
 }
 
 Date::Date(unsigned short int day, unsigned short int month, unsigned int year){
@@ -52,5 +53,5 @@ void Date::setYear(unsigned int year){
 }
 
 ostream& operator<<(ostream& out, const Date & date){
-    out << date.year << "/" << date.month << "/" << date.day;
+	out << setfill('0') << setw(2) << date.day << "/" << setfill('0') << setw(2) << date.month << "/" << setfill('0') << setw(4) << date.year;
 }

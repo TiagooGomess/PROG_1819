@@ -8,11 +8,17 @@
 #include <vector>
 #include <string>
 
+
 using namespace std;
 
 int main(){
     Agency agency("agency.txt");
-    bool aodkso = agency.update_clients_file();
-    bool sdsadas = agency.update_packs_file();
-    return 0;
+    //bool aodkso = agency.update_clients_file();
+    //bool sdsadas = agency.update_packs_file();
+    
+	Date date("2/5/2020");
+
+	cout << date;
+
+	return 0;
 }
