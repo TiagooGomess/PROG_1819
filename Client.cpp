@@ -11,6 +11,9 @@ Client::Client(string name, string nif, unsigned short family_size, Address addr
 	this->nif = nif;
 	this->family_size = family_size;
 	this->address = address;
+	this->total_buys = 0;
+	vector<int> bought_packs = {0};
+	this->bought_packs = bought_packs;
 }
 
 Client::Client(string name, string nif, unsigned short family_size, Address address, vector<int>bought_packets, unsigned total_buys) {
@@ -65,7 +68,7 @@ void Client::setAddress(Address address) {
 void Client::setBought_packets(vector<int>& bought_packets) {
 	this->bought_packs = bought_packets;
 }
-unsigned Client::setTotal_buys(unsigned total_buys) {
+void Client::setTotal_buys(unsigned total_buys) {
 	this->total_buys = total_buys;
 }
 

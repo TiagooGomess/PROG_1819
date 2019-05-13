@@ -191,3 +191,128 @@ bool Agency::update_packs_file() const{
 	}
 	return false;
 }
+
+
+// Not Tested
+void Agency::create_client(){
+	string name, nif, address;
+	unsigned short int family_size;
+	cout << "Qual o nome do cliente? ";
+	getline(cin, name);
+	cout << "Qual o NIF do cliente? ";
+	getline(cin, nif);
+	cout << "Quantas pessoas estão no agregado familiar? ";
+	cin >> family_size;
+	cin.clear();
+	cin.ignore(1000, '\n');
+	cout << "Qual a morada? ";
+	getline(cin, address);
+	Address add(address);
+	Client client(name, nif, family_size, add);
+	this->clients.push_back(client);
+}
+
+// Not Tested
+void Agency::remove_client(){
+	string nif;
+	int idx = -1;
+	cout << "Qual o NIF do cliente que deseja apagar? ";
+	getline(cin, nif);
+	for (size_t i = 0; i < this->clients.size(); i++){
+		if (this->clients.at(i).getNif() == nif)
+			idx = i;
+	}
+	if (idx == -1){
+		cout << "Cliente nao encontrado." << endl;
+	} else{
+		this->clients.erase(this->clients.begin() + idx);
+	}
+}
+
+// Not Tested
+void Agency::change_client(){
+	string nif;
+	int idx = -1;
+	cout << "Qual o NIF do cliente que pretende alterar? ";
+	getline(cin, nif);
+	for (size_t i = 0; i < this->clients.size(); i++){
+		if (this->clients.at(i).getNif() == nif)
+			idx = i;
+	}
+	if (idx == -1)
+		cout << "Cliente nao encontrado." << endl;
+	else {
+		bool running = true;
+		int choice = 0;
+		do {
+			cout << "Que parametro deseja alterar? " << endl;
+			cout << " [1] Nome\n [2] NIF\n [3] Numero de pessoas no agregado familiar\n [4] Morada\n [0] Voltar\n";
+			cin >> choice;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			if(choice == 0){
+				break;
+			}
+			string option = "";
+			unsigned short int family_size;
+			switch(choice){
+				case 1:
+					cout << "Qual o novo nome? ";
+					getline(cin, option);
+					this->clients.at(idx).setName(option);
+					break;
+				case 2:
+					cout << "Qual o novo NIF? ";
+					getline(cin, option);
+					this->clients.at(idx).setNif(option);
+					break;
+				case 3:
+					cout << "Quantas pessoas tem o cliente no seu agregado familiar? ";
+					cin >> family_size;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					this->clients.at(idx).setFamily_size(family_size);
+					break;
+				case 4:
+					cout << "Qual a nova morada? ";
+					getline(cin, option);
+					Address address(option);
+					this->clients.at(idx).setAddress(address);
+					break;
+			}
+		} while(running);
+	}
+
+}
+
+// Not Tested
+// TODO: Verificar se o id ja existe ou nao
+void Agency::create_pack(){
+	int id;
+	unsigned int num_spots;
+	double price_p_person;
+	string places, date;
+	cout << "Qual o id do pack? ";
+	cin >> id;
+	cin.clear();
+	cin.ignore(1000, '\n');
+	cout << "Quais os lugares a visitar? (separados por virgulas)";
+	getline(cin, places);
+	vector<string> places_vector = separate_string(places, ',');
+	cout << "Qual a data de inicio? ";
+	getline(cin, date);
+	Date beg_date(date);
+	cout << "Qual a data de fim? ";
+	getline(cin, date);
+	Date end_date(date);
+	cout << "Qual o preço por pessoa? ";
+	cin >> price_p_person;
+	cin.clear();
+	cin.ignore(1000, '\n');
+	cout << "Quantas sao as vagas totais? ";
+	cin >> num_spots;
+	cin.clear();
+	cin.ignore(1000, '\n');
+	Pack pack(id, places_vector, beg_date, end_date, price_p_person, num_spots, 0);
+	this->packs.push_back(pack);
+}
