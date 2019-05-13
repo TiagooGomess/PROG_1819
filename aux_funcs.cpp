@@ -1,7 +1,10 @@
 #include "aux_funcs.h"
+#include "Client.h"
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -59,4 +62,16 @@ vector<string> parse_places(string all_places) {
 		}
 	}
 	return places;
+}
+
+vector<int> separate_string_int(string str){
+    stringstream s(str);
+    int id;
+    vector<int> int_vec;
+    while(s >> id){
+        int_vec.push_back(id);
+        s.clear();
+        s.ignore(1000, ' ');
+    }
+    return int_vec;
 }

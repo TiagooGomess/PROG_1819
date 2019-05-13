@@ -13,3 +13,5 @@ vector<string> separate_string(string str, char separator);
 vector<int> convert_vector_str_to_int(vector<string> v);
 
 vector<string> parse_places(string all_places);
+
+vector<int> separate_string_int(string str);

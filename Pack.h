@@ -15,6 +15,7 @@ class Pack{
   Date end_date;
   double price_per_person;
   unsigned int max_num_people;
+  unsigned int already_sold;
   
  public:
   Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people);
@@ -26,6 +27,7 @@ class Pack{
   Date getEndDate() const;
   double getPricePerPerson() const;
   unsigned int getMaxNumPeople() const;
+  unsigned int getAlreadySold()
 
   // Setters
   void setId(int id);  // to set negatve if "deprecated"

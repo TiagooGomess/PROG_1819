@@ -21,41 +21,34 @@ Agency::Agency(string filename) {
 	this->address = Address(field);
 	getline(f, clients_filename);
 	getline(f, packs_filename);
+	this->clients_filename = clients_filename;
+	this->packs_filename = packs_filename;
 	f.close();
-	string name, nif, packs, address_str, not_used;
-	unsigned int total_buys, num_people;
+	string name, nif, address_str, pack_ids_str, family_size, total_buys, not_used;
 	vector<Client> clients_vector;
-	vector<string> ids;
-	vector<int> pack_ids;
+	vector<int> ids;
 	f.open(clients_filename);
 	if (f.is_open()) {
-		while (!f.eof()) {
+		do {
 			getline(f, name);
 			getline(f, nif);
-			f >> num_people;
-			f.clear();
-			f.ignore(1000, '\n');
+			getline(f, family_size);
 			getline(f, address_str);
-			getline(f, packs);
-			f >> total_buys;
-			f.clear();
-			f.ignore(1000, '\n');
+			getline(f, pack_ids_str);
+			getline(f, total_buys);
 			getline(f, not_used);
 			Address address(address_str);
-			packs += ";";
-			ids = separate_string(packs, ';');
-			pack_ids = convert_vector_str_to_int(ids);
-			Client client(name, nif, num_people, address, pack_ids, total_buys);
+			ids = separate_string_int(pack_ids_str);
+			Client client(name, nif, stoi(family_size), address, ids, stoi(total_buys));
 			clients_vector.push_back(client);
-		}
+		} while(not_used == "::::::::::");
 		f.close();
 	}
 	else {
 		cerr << "Error: Could not open the clients file." << endl;
 	}
-
 	f.open(packs_filename);
-	unsigned int num_spots;
+	unsigned int num_spots, already_sold;
 	vector<Pack> packs_vector;
 	vector <string> places_vector;
 	double price_per_person;
@@ -77,6 +70,9 @@ Agency::Agency(string filename) {
 			f.clear();
 			f.ignore(1000, '\n');
 			f >> num_spots;
+			f.clear();
+			f.ignore(1000, '\n');
+			f >> already_sold;
 			f.clear();
 			f.ignore(1000, '\n');
 			getline(f, not_used);
@@ -145,4 +141,46 @@ void Agency::setPackets(vector<Pack>& packs) {
 
 ostream& operator<<(ostream& out, const Agency& agency) {
 	out << agency.name << "  |  " << agency.nif << "  |  " << agency.URL << "  |  " << agency.address << "  ";
+}
+
+bool Agency::update_clients_file() const{
+	ofstream f;
+	string ids = "";
+	f.open(this->clients_filename, ios::out);
+	if (f.is_open()){
+		for (size_t i = 0; i < this->clients.size(); i++){
+			f << this->clients.at(i).getName() << "\n" << this->clients.at(i).getNif() << "\n" << this->clients.at(i).getFamily_size() << "\n" << this->clients.at(i).getAddress() << "\n";
+			for (size_t j = 0; j < this->clients.at(i).getBought_packets().size(); j++){
+				ids += to_string(this->clients.at(i).getBought_packets().at(j)) + "; ";
+			}
+			ids = ids.substr(0, ids.size() - 2);
+			f << ids << "\n" << this->clients.at(i).getTotal_buys() << "\n";
+			if (i != this->clients.size() - 1)
+				f << "::::::::::" << "\n";
+		}
+		f.close();
+		return true;
+	}
+	return false;
+}
+
+bool Agency::update_packs_file() const{
+	ofstream f;
+	string places_str = "";
+	f.open(this->packs_filename, ios::out);
+	if (f.is_open()){
+		f << this->packs.at(this->packs.size() - 1).getId() << "\n";
+		for (size_t i = 0; i < this->packs.size(); i++){
+			f << this->packs.at(i).getId() << "\n";
+			for (size_t j = 0; j < this->packs.at(i).getPlaces().size(); j++){
+				places_str += this->packs.at(i).getPlaces().at(j);
+				if (j == 0)
+					places_str += " - ";
+				else
+					places_str += ", ";
+			}
+			places_str = places_str.substr(0, places_str.size() - 3);
+			f << places_str << "\n" << this->packs.at(i).getBeginningDate() << "\n" << this->packs.at(i).getEndDate() << "\n" << this->packs.at(i).getPricePerPerson() << "\n" << this->packs.at(i).getMaxNumPeople() << "\n"
+		}
+	}
 }

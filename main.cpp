@@ -12,11 +12,6 @@ using namespace std;
 
 int main(){
     Agency agency("agency.txt");
-    cout << "Ola" << endl;
-    vector<Client> clients_vector = agency.getClients();
-    cout << clients_vector.size() << endl;
-    for (size_t i = 0; i < clients_vector.size(); i++){
-        cout << clients_vector.at(i) << endl;
-    }
+    bool sdsadas = agency.update_clients_file();
     return 0;
 }
