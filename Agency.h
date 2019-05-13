@@ -48,5 +48,8 @@ public:
 	
 	bool update_clients_file() const;
 	bool update_packs_file() const;
-
+	void create_client();
+	void remove_client();
+	void change_client();
+	void create_pack();
 };
