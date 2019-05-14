@@ -52,4 +52,9 @@ public:
 	void remove_client();
 	void change_client();
 	void create_pack();
+	void change_pack();
+	void show_specific_client();
+	void show_all_clients();
+	void show_all_packs();
+	void show_all_packs_related_to_place();
 };

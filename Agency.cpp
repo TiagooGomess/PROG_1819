@@ -243,7 +243,7 @@ void Agency::change_client(){
 		cout << "Cliente nao encontrado." << endl;
 	else {
 		bool running = true;
-		int choice = 0;
+		unsigned int choice = 0;
 		do {
 			cout << "Que parametro deseja alterar? " << endl;
 			cout << " [1] Nome\n [2] NIF\n [3] Numero de pessoas no agregado familiar\n [4] Morada\n [0] Voltar\n";
@@ -279,6 +279,8 @@ void Agency::change_client(){
 					Address address(option);
 					this->clients.at(idx).setAddress(address);
 					break;
+				default:
+					cout << "Opcao inexistente. Introduza de novo." << endl;
 			}
 		} while(running);
 	}
@@ -315,4 +317,131 @@ void Agency::create_pack(){
 	cin.ignore(1000, '\n');
 	Pack pack(id, places_vector, beg_date, end_date, price_p_person, num_spots, 0);
 	this->packs.push_back(pack);
+}
+
+// Not Tested
+void Agency::change_pack(){
+	int id, idx = -1;
+	cout << "Qual o id do pack que pretende alterar? ";
+	cin >> id;
+	cin.clear();
+	cin.ignore(1000, '\n');
+
+	for (size_t i = 0; i < this->packs.size(); i++){
+		if (this->packs.at(i).getId() == id)
+			idx = i;
+	}
+
+	if (idx == -1){
+		cout << "Pack nao encontrado." << endl;
+	} else {
+		bool running = true;
+		unsigned int choice = 0;
+		do {
+			cout << "Que parametro do pack deseja alterar? " << endl;
+			cout << " [1] Id\n [2] Locais a visitar\n [3] Data de inicio\n [4] Data de fim\n [5] Preco por pessoa\n [6] Número total de vagas\n [0] Voltar\n";
+			cin >> choice;
+			cin.clear();
+			cin.ignore(1000, '\n');
+			if(choice == 0){
+				break;
+			}
+			int new_id;
+			double price;
+			string option = "";
+			switch(choice){
+				case 1:
+					cout << "Qual o novo id? ";
+					cin >> new_id;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					this->packs.at(idx).setId(new_id);
+					break;
+				case 2:
+					cout << "Quais os novos locais a visitar (separados por virgulas) ? ";
+					getline(cin, option);
+					this->packs.at(idx).setPlaces(separate_string(option, ','));
+					break;
+				case 3:
+					cout << "Qual a nova data de inicio? ";
+					getline(cin, option);
+					Date beg_date(option);
+					this->packs.at(idx).setBeginningDate(beg_date);
+					break;
+				case 4:
+					cout << "Qual a nova data de fim? ";
+					getline(cin, option);
+					Date end_date(option);
+					this->packs.at(idx).setEndDate(end_date);
+					break;
+				case 5:
+					cout << "Qual o novo preco por pessoa? ";
+					cin >> price;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					this->packs.at(idx).setPricePerPerson(price);
+					break;
+				case 6:
+					cout << "Qual o novo numero total de vagas? ";
+					cin >> new_id;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					this->packs.at(idx).setMaxNumPeople(new_id);
+					break;
+				default:
+					cout << "Opcao inexistente. Introduza de novo." << endl;
+			}
+		} while(running);
+	}
+
+}
+
+// Not Tested
+// Need to work on the 'front-end'/formatting of the text
+void Agency::show_specific_client(){
+	string nif = "";
+	int idx = -1;
+	cout << "Qual o NIF do cliente? ";
+	getline(cin, nif);
+	for (size_t i = 0; i < this->clients.size(); i++){
+		if (this->clients.at(i).getNif() == nif)
+			idx = i;	
+	}
+	if (idx == -1)
+		cout << "Cliente nao encontrado" << endl;
+	else {
+		cout << this->clients.at(idx) << endl;
+	}
+}
+
+// Same as the one above
+void  Agency::show_all_clients(){
+	for (size_t i = 0; i < this->clients.size(); i++)
+		cout << this->clients.at(i) << endl;
+}
+
+// Same
+void Agency::show_all_packs(){
+	for (size_t i = 0; i < this->packs.size(); i++)
+	cout << this->packs.at(i) << endl;
+}
+
+void Agency::show_all_packs_related_to_place(){
+	string place = "";
+	vector<Pack> target_packs;
+	cout << "Qual o local? ";
+	getline(cin, place);
+	for (size_t i = 0; i < this->packs.size(); i++){
+		for (size_t j = 0; j < this->packs.at(i).getPlaces().size(); j++){
+			if (this->packs.at(i).getPlaces().at(j) == place)
+				target_packs.push_back(this->packs.at(i));
+		}
+	}
+	if (target_packs.size() == 0)
+		cout << "Nao ha nenhum pack relativo a esse destino." << endl;
+	else{
+		for (size_t i = 0; i < target_packs.size(); i++){
+			cout << target_packs.at(i) << endl;
+		}
+	}
 }
