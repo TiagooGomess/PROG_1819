@@ -16,9 +16,8 @@ int main(){
     //bool aodkso = agency.update_clients_file();
     //bool sdsadas = agency.update_packs_file();
     
-	Date date("2/5/2020");
-
-	cout << date;
+	agency.create_client();
+    agency.show_all_clients();
 
 	return 0;
 }
