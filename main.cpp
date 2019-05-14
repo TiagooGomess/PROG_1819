@@ -13,12 +13,10 @@ using namespace std;
 
 int main(){
     Agency agency("agency.txt");
-    //bool aodkso = agency.update_clients_file();
-    //bool sdsadas = agency.update_packs_file();
-    
-	Date date("2/5/2020");
 
-	cout << date;
+	agency.create_client();
+    
+	
 
 	return 0;
 }
