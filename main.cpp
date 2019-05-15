@@ -4,6 +4,7 @@
 #include "Pack.h"
 #include "Client.h"
 #include "aux_funcs.h"
+#include "Menu.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -14,7 +15,7 @@ using namespace std;
 int main(){
     Agency agency("agency.txt");
 
-	agency.create_client();
+	main_menu(agency);
     
 
 
