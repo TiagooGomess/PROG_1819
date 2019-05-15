@@ -82,75 +82,72 @@ void packs_management(Agency agency) {
 		// agency.remove_pack();   We need to implement this method!!
 		// agency.update_packs_file();
 	//}
-	//else if (option == 4) {
-		// agency.buy_pack();  We need to implement this method!!
-		//agency.update_packs_file();
-	//}
+	else if (option == 4) {
+		agency.buy_pack();
+		agency.update_packs_file();
+		agency.update_clients_file();
+	}
 	cout << "\n\n";
 	packs_management(agency);
 }
 
 
-//void information_visualization() {
-//	int option;
-//	cout << "\n\n[1]: Mostrar um cliente\n";
-//	cout << "[2]: Mostrar todos os clientes\n\n";
-//	cout << "[3]: Mostrar um pacote\n";
-//	cout << "[4]: Mostrar todos os pacotes\n";
-//	cout << "[5]: Mostrar todos os pacotes entre duas datas especificas\n";
-//	cout << "[6]: Mostrar todos os pacotes relativos a um destino especifico\n";
-//	cout << "[7]: Mostrar todos os pacotes entre duas datas especificas e relativos a um destino especifico\n\n";
-//	cout << "[8]: Mostrar todos os pacotes vendidos a todos os clientes\n";
-//	cout << "[9]: Mostrar o numero e o valor total dos pacotes vendidos\n\n";
-//
-//	cout << "[0]: Menu principal\n\n";
-//	do {
-//		if (cin.fail()) {
-//			cin.clear();
-//			cin.ignore(1000, '\n');
-//		}
-//		cout << "Insira um numero [0-9] para escolher uma opção: ";
-//		cin >> option;
-//		cin.clear();
-//		cin.ignore(1000, '\n');
-//	} while (cin.fail() || option < 0 || option > 9);
-//
-//	cout << "\n\n";
-//	cout << "-----------------------------------------------------\n";
-//	if (option == 0) {
-//		main_menu();
-//	}
-//	else if (option == 1) {
-//		show_client();
-//	}
-//	else if (option == 2) {
-//		show_all_clients();
-//	}
-//	else if (option == 3) {
-//		show_pack();
-//	}
-//	else if (option == 4) {
-//		show_all_packs();
-//	}
-//	else if (option == 5) {
-//		show_packs_between_2_dates();
-//	}
-//	else if (option == 6) {
-//		show_packs_for_specific_destination();
-//	}
-//	else if (option == 7) {
-//		show_packs_between_2_dates_for_specific_destination();
-//	}
-//	else if (option == 8) {
-//		show_all_sold_packs();
-//	}
-//	else if (option == 9) {
-//		show_number_and_total_value_of_sold_packs();
-//	}
-//	cout << "\n\n";
-//	cout << "-----------------------------------------------------\n";
-//	information_visualization();
-//}
+void information_visualization(Agency agency) {
+	int option;
+	cout << "\n\n[1]: Mostrar um cliente\n";
+	cout << "[2]: Mostrar todos os clientes\n\n";
+	cout << "[3]: Mostrar todos os pacotes\n";
+	cout << "[4]: Mostrar todos os pacotes entre duas datas especificas\n";
+	cout << "[5]: Mostrar todos os pacotes relativos a um destino especifico\n";
+	cout << "[6]: Mostrar todos os pacotes entre duas datas especificas e relativos a um destino especifico\n\n";
+	cout << "[7]: Mostrar todos os pacotes vendidos a todos os clientes\n";
+	cout << "[8]: Mostrar o numero e o valor total dos pacotes vendidos\n\n";
+
+	cout << "[0]: Menu principal\n\n";
+	do {
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+		cout << "Insira um numero [0-8] para escolher uma opção: ";
+		cin >> option;
+		cin.clear();
+		cin.ignore(1000, '\n');
+	} while (cin.fail() || option < 0 || option > 8);
+
+	cout << "\n\n";
+	cout << "-----------------------------------------------------\n";
+	if (option == 0) {
+		main_menu(agency);
+	}
+	else if (option == 1) {
+		agency.show_specific_client();
+	}
+	else if (option == 2) {
+		agency.show_all_clients();
+	}
+	else if (option == 3) {
+		agency.show_all_packs();
+	}
+	else if (option == 4) {
+		agency.show_packs_between_dates();
+	}
+	else if (option == 5) {
+		agency.show_all_packs_related_to_place();
+	}
+	else if (option == 6) {
+		agency.show_packs_between_dates_and_related_to_place();
+	}
+	else if (option == 7) {
+		agency.show_packs_sold_to_all_clients();
+	}
+	else if (option == 8) {
+		agency.show_sold_packs_info();
+	}
+	cout << "\n\n";
+	cout << "-----------------------------------------------------\n";
+	information_visualization(agency);
+}
 
 void estatisticas(Agency agency) {
 	int option;
@@ -217,7 +214,7 @@ void main_menu(Agency agency) {
 	else if (option == 2) {
 		packs_management(agency);
 	}
-	/*else if (option == 3) {
+	else if (option == 3) {
 		information_visualization(agency);
-	}*/
+	}
 }

@@ -16,12 +16,5 @@ Antonio Aurelio
 123456789
 4
 Rua dos Drogados  /  100  /  -  /  4534-785  /  Lourosa  
-234; 67; 13
-1000
-::::::::::
-Tiago Gomes
-123456789
-4
-Rua Sem Fim  /  200  /  5Esq  /  1200-001  /  Lisboa  
-0
-0
+234; 67; 13; 1
+2200

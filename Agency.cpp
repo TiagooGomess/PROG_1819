@@ -193,7 +193,6 @@ bool Agency::update_packs_file() const{
 }
 
 
-// Not Tested
 void Agency::create_client(){
 	string name, nif, address;
 	unsigned short int family_size;
@@ -212,7 +211,7 @@ void Agency::create_client(){
 	this->clients.push_back(client);
 }
 
-// Not Tested
+
 void Agency::remove_client(){
 	string nif;
 	int idx = -1;
@@ -229,7 +228,7 @@ void Agency::remove_client(){
 	}
 }
 
-// Not Tested
+
 void Agency::change_client(){
 	string nif;
 	int idx = -1;
@@ -289,7 +288,7 @@ void Agency::change_client(){
 }
 
 // Not Tested
-// TODO: Verificar se o id ja existe ou nao
+// TODO: Verificar se o id ja existe ou nao       !!!!  MUDAR O ID PARA MAIOR ID + 1  !!!!
 void Agency::create_pack(){
 	int id;
 	unsigned int num_spots;
@@ -320,7 +319,7 @@ void Agency::create_pack(){
 	this->packs.push_back(pack);
 }
 
-// Not Tested
+
 void Agency::change_pack(){
 	int id, idx = -1;
 	cout << "Qual o id do pack que pretende alterar? ";
@@ -552,13 +551,13 @@ void Agency::show_packs_sold_to_all_clients() const{
 		}
 	}
 	if (target_packs.size() == 0)
-		cout < "Nenhum pack foi encontrado" << endl;
+		cout << "Nenhum pack foi encontrado" << endl;
 	else
 		for (size_t i = 0; i < target_packs.size(); i++)
 			cout << target_packs.at(i) << endl;
 }
 
-// Same
+
 void Agency::buy_pack(){
 	string nif = "";
 	int idx = -1, id, id_idx = -1;
