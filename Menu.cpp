@@ -152,9 +152,36 @@ void packs_management(Agency agency) {
 //	information_visualization();
 //}
 
-//void estatisticas(Agency agency) {
+void estatisticas(Agency agency) {
+	int option;
+	cout << "\n\n[1]: Obter o nome dos N locais mais visitados\n";
+	cout << "[2]: listagem de todos os clientes na qual se indica, para cada cliente, um dos pacotes em que seja visitado um dos N locais mais visitados que ele ainda não visitou\n";
+	cout << "[0]: Menu principal\n\n";
+	do {
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+		cout << "Insira um numero [0-2] para escolher uma opção: ";
+		cin >> option;
+		cin.clear();
+		cin.ignore(1000, '\n');
+	} while (cin.fail() || option < 0 || option > 4);
 
-//}
+	cout << "\n\n";
+	cout << "-----------------------------------------------------\n";
+	if (option == 0) {
+		main_menu(agency);
+	}
+	//else if (option == 1) {
+	//	// Implementar
+	//}
+	//else if (option == 2) {
+	//	// Implementar
+	//}
+	cout << "\n\n";
+	packs_management(agency);
+}
 
 
 void main_menu(Agency agency) {
