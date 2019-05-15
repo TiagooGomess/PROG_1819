@@ -254,6 +254,7 @@ void Agency::change_client(){
 				break;
 			}
 			string option = "";
+			Address add;
 			unsigned short int family_size;
 			switch(choice){
 				case 1:
@@ -276,8 +277,8 @@ void Agency::change_client(){
 				case 4:
 					cout << "Qual a nova morada? ";
 					getline(cin, option);
-					Address address(option);
-					this->clients.at(idx).setAddress(address);
+					add = Address(option);
+					this->clients.at(idx).setAddress(add);
 					break;
 				default:
 					cout << "Opcao inexistente. Introduza de novo." << endl;
@@ -349,6 +350,7 @@ void Agency::change_pack(){
 			int new_id;
 			double price;
 			string option = "";
+			Date end_date, beg_date;
 			switch(choice){
 				case 1:
 					cout << "Qual o novo id? ";
@@ -365,13 +367,13 @@ void Agency::change_pack(){
 				case 3:
 					cout << "Qual a nova data de inicio? ";
 					getline(cin, option);
-					Date beg_date(option);
+					beg_date = Date(option);
 					this->packs.at(idx).setBeginningDate(beg_date);
 					break;
 				case 4:
 					cout << "Qual a nova data de fim? ";
 					getline(cin, option);
-					Date end_date(option);
+					end_date = Date(option);
 					this->packs.at(idx).setEndDate(end_date);
 					break;
 				case 5:
@@ -426,6 +428,7 @@ void Agency::show_all_packs(){
 	cout << this->packs.at(i) << endl;
 }
 
+// Same
 void Agency::show_all_packs_related_to_place(){
 	string place = "";
 	vector<Pack> target_packs;
