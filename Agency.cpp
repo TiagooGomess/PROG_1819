@@ -400,7 +400,7 @@ void Agency::change_pack(){
 
 // Not Tested
 // Need to work on the 'front-end'/formatting of the text
-void Agency::show_specific_client(){
+void Agency::show_specific_client() const{
 	string nif = "";
 	int idx = -1;
 	cout << "Qual o NIF do cliente? ";
@@ -417,19 +417,19 @@ void Agency::show_specific_client(){
 }
 
 // Same as the one above
-void  Agency::show_all_clients(){
+void  Agency::show_all_clients() const {
 	for (size_t i = 0; i < this->clients.size(); i++)
 		cout << this->clients.at(i) << endl;
 }
 
 // Same
-void Agency::show_all_packs(){
+void Agency::show_all_packs() const{
 	for (size_t i = 0; i < this->packs.size(); i++)
 	cout << this->packs.at(i) << endl;
 }
 
 // Same
-void Agency::show_all_packs_related_to_place(){
+void Agency::show_all_packs_related_to_place() const{
 	string place = "";
 	vector<Pack> target_packs;
 	cout << "Qual o local? ";
@@ -447,4 +447,167 @@ void Agency::show_all_packs_related_to_place(){
 			cout << target_packs.at(i) << endl;
 		}
 	}
+}
+
+// Same
+void Agency::show_packs_between_dates() const{
+	Date beg_date, end_date;
+	vector<Pack> target_packs;
+	string date = "";
+	cout << "Qual a primeira data? ";
+	getline(cin, date);
+	beg_date = Date(date);
+	cout << "Qual a segunda data? ";
+	getline(cin, date);
+	end_date = Date(date);
+	for (size_t i = 0; i < this->packs.size(); i++){
+		if (beg_date < this->packs.at(i).getBeginningDate() && this->packs.at(i).getEndDate() < end_date)
+			target_packs.push_back(this->packs.at(i));
+	}
+	if (target_packs.size() == 0)
+		cout << "Nenhum pack foi encontrado" << endl;
+	else
+		for (size_t i = 0; i < target_packs.size(); i++)
+			cout << target_packs.at(i) << endl;
+}
+
+// Same
+void Agency::show_packs_between_dates_and_related_to_place() const{
+	Date beg_date, end_date;
+	string date = "", place = "";
+	vector<Pack> target_packs, intermediate;
+	cout << "Qual o local? ";
+	getline(cin, place);
+	cout << "Qual a primeira data? ";
+	getline(cin, date);
+	beg_date = Date(date);
+	cout << "Qual a segunda data? ";
+	getline(cin, date);
+	end_date = Date(date);
+	for (size_t i = 0; i < this->packs.size(); i++){
+		for (size_t j = 0; j < this->packs.at(i).getPlaces().size(); j++){
+			if (this->packs.at(i).getPlaces().at(j) == place)
+				intermediate.push_back(this->packs.at(i));
+		}
+	}
+	for (size_t i = 0; i < intermediate.size(); i++){
+		if (beg_date < intermediate.at(i).getBeginningDate() && intermediate.at(i).getEndDate() < end_date)
+			target_packs.push_back(intermediate.at(i));
+	}
+	if (target_packs.size() == 0)
+		cout << "Nenhum pack foi encontrado" << endl;
+	else
+	{
+		for (size_t i = 0; i < target_packs.size(); i++)
+			cout << target_packs.at(i) << endl;
+	}
+}
+
+// Same
+void Agency::show_packs_sold_to_client() const{
+	string nif = "";
+	int idx = -1;
+	vector<Pack> target_packs;
+	cout << "Qual o nif do cliente? ";
+	getline(cin, nif);
+	for (size_t i = 0; i < this->clients.size(); i++){
+		if (this->clients.at(i).getNif() == nif){
+			idx = i;
+		}
+	}
+	if (idx == -1)
+		cout << "Cliente nao encontrado" << endl;
+	else {
+		for (size_t i = 0; i < this->clients.at(idx).getBought_packets().size(); i++){
+			for (size_t j = 0; j < this->packs.size(); j++){
+				if (this->packs.at(j).getId() == this->clients.at(idx).getBought_packets().at(i))
+					target_packs.push_back(this->packs.at(j));
+			}
+		}
+		if (target_packs.size() == 0)
+			cout << "Nenhum pack foi encontrado" << endl;
+		else {
+			for (size_t i = 0; i < target_packs.size(); i++)
+				cout << target_packs.at(i) << endl;
+		}
+	}
+}
+
+// Same
+void Agency::show_packs_sold_to_all_clients() const{
+	vector<int> all_ids;
+	vector<Pack> target_packs;
+
+	for(size_t i = 0; i < this->clients.size(); i++){
+		for (size_t j = 0; j < this->clients.at(i).getBought_packets().size(); j++){
+			if (!is_in(this->clients.at(i).getBought_packets().at(j), all_ids))
+				all_ids.push_back(this->clients.at(i).getBought_packets().at(j));
+		}
+	}
+
+	for (size_t i = 0; i < all_ids.size(); i++){
+		for (size_t j = 0; j < this->packs.size(); j++){
+			if (this->packs.at(j).getId() == all_ids.at(i))
+				target_packs.push_back(this->packs.at(j));
+		}
+	}
+	if (target_packs.size() == 0)
+		cout < "Nenhum pack foi encontrado" << endl;
+	else
+		for (size_t i = 0; i < target_packs.size(); i++)
+			cout << target_packs.at(i) << endl;
+}
+
+// Same
+void Agency::buy_pack(){
+	string nif = "";
+	int idx = -1, id, id_idx = -1;
+	cout << "Qual o NIF do cliente? ";
+	getline(cin, nif);
+	for (size_t i = 0; i < this->clients.size(); i++){
+		if (this->clients.at(i).getNif() == nif)
+			idx = i;
+	}
+	if (idx == -1)
+		cout << "Cliente nao encontrado" << endl;
+	else {
+		cout << "Qual o id do pack? ";
+		cin >> id;
+		cin.clear();
+		cin.ignore(1000, '\n');
+		for (size_t i = 0; i < this->packs.size(); i++){
+			if (this->packs.at(i).getId() == id)
+				id_idx = i;
+		}
+		if (id_idx == -1)
+			cout << "Pack nao encontrado" << endl;
+		else {
+			if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() - this->clients.at(idx).getFamily_size() >= 0){
+				// Atualiza lista de pacotes comprados pelo cliente
+				vector<int> ids = this->clients.at(idx).getBought_packets();
+				ids.push_back(this->packs.at(id_idx).getId());
+				this->clients.at(idx).setBought_packets(ids);
+
+				// Atualiza total de compras do cliente
+				this->clients.at(idx).setTotal_buys(this->clients.at(idx).getTotal_buys() + this->clients.at(idx).getFamily_size() * this->packs.at(id_idx).getPricePerPerson());
+
+				// Atualiza vagas do pack
+				this->packs.at(id_idx).setAlreadySold(this->packs.at(id_idx).getAlreadySold() + this->clients.at(idx).getFamily_size());
+				if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() == 0)
+					this->packs.at(id_idx).setId(-this->packs.at(idx).getId());
+			}
+			else
+				cout << "Nao ha vagas disponiveis" << endl;
+		}
+	}
+}
+
+// Same
+void Agency::show_sold_packs_info() const{
+	unsigned int sum = 0, total_money = 0;
+	for (size_t i = 0; i < this->packs.size(); i++){
+		sum += this->packs.at(i).getAlreadySold();
+		total_money += this->packs.at(i).getAlreadySold() * this->packs.at(i).getPricePerPerson();
+	}
+	cout << "Total de packs vendidos: " << sum << endl << "Valor total dos pacotes vendidos: " << total_money << endl;
 }

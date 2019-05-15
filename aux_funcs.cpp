@@ -75,3 +75,11 @@ vector<int> separate_string_int(string str){
     }
     return int_vec;
 }
+
+bool is_in(int t, vector<int> v){
+    for (size_t i = 0; i < v.size(); i++){
+        if (v.at(i) == t)
+            return true;
+    }
+    return false;
+}

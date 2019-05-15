@@ -31,5 +31,6 @@ class Date{
 
   
   friend ostream& operator<<(ostream& out, const Date & date);
+  friend bool operator<(const Date first_date, const Date second_date);
 
 };

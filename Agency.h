@@ -53,8 +53,14 @@ public:
 	void change_client();
 	void create_pack();
 	void change_pack();
-	void show_specific_client();
-	void show_all_clients();
-	void show_all_packs();
-	void show_all_packs_related_to_place();
+	void show_specific_client() const;
+	void show_all_clients() const;
+	void show_all_packs() const;
+	void show_all_packs_related_to_place() const;
+	void show_packs_between_dates() const;
+	void show_packs_between_dates_and_related_to_place() const;
+	void show_packs_sold_to_client() const;
+	void show_packs_sold_to_all_clients() const;
+	void buy_pack();
+	void show_sold_packs_info() const;
 };

@@ -55,3 +55,22 @@ void Date::setYear(unsigned int year){
 ostream& operator<<(ostream& out, const Date & date){
 	out << setfill('0') << setw(2) << date.day << "/" << setfill('0') << setw(2) << date.month << "/" << setfill('0') << setw(4) << date.year;
 }
+
+bool operator<(const Date first_date, const Date second_date){
+    if (first_date.year < second_date.year)
+        return true;
+    else if (first_date.year > second_date.year)
+        return false;
+    else {
+        if (first_date.month < second_date.month)
+            return true;
+        else if (first_date.month > second_date.month)
+            return false;
+        else {
+            if (first_date.day < second_date.day)
+                return true;
+            else if (first_date.day >= second_date.day)
+                return false;
+        }
+    }
+}
