@@ -12,6 +12,8 @@
 
 using namespace std;
 
+typedef std::pair<string, int> spe_pair;
+
 class Agency {
 private:
 	string name; 
@@ -22,6 +24,7 @@ private:
 	vector<Pack> packs;
 	string clients_filename;
 	string packs_filename;
+	vector<spe_pair> get_most_visited_places();
 
 public:
 	Agency(string fileName);
@@ -63,4 +66,6 @@ public:
 	void show_packs_sold_to_all_clients() const;
 	void buy_pack();
 	void show_sold_packs_info() const;
+	void show_most_visited_places();
+	void show_recommended_packs();
 };

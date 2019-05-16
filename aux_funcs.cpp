@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include "Agency.h"
 
 using namespace std;
 
@@ -82,4 +83,22 @@ bool is_in(int t, vector<int> v){
             return true;
     }
     return false;
+}
+
+bool compare_packs(Pack pack1, Pack pack2){
+    return pack1.getAlreadySold() > pack2.getAlreadySold();
+}
+
+string get_first_not_in(vector<string> places, vector<spe_pair> target_places){
+    bool equal = false;
+    for (size_t i = 0; i < target_places.size(); i++){
+        for (string place: places){
+            if (target_places.at(i).first == place)
+                equal = true;
+        }
+        if (!equal)
+            return target_places.at(i).first;
+        equal = false;
+    }
+    return "None";
 }

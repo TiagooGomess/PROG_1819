@@ -7,6 +7,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -552,7 +554,7 @@ void Agency::show_packs_sold_to_all_clients() const{
 		}
 	}
 	if (target_packs.size() == 0)
-		cout < "Nenhum pack foi encontrado" << endl;
+		cout << "Nenhum pack foi encontrado" << endl;
 	else
 		for (size_t i = 0; i < target_packs.size(); i++)
 			cout << target_packs.at(i) << endl;
@@ -610,4 +612,80 @@ void Agency::show_sold_packs_info() const{
 		total_money += this->packs.at(i).getAlreadySold() * this->packs.at(i).getPricePerPerson();
 	}
 	cout << "Total de packs vendidos: " << sum << endl << "Valor total dos pacotes vendidos: " << total_money << endl;
+}
+
+// Already Tested, working fine
+vector<spe_pair> Agency::get_most_visited_places(){
+	map<string, int> places_map;
+	vector<spe_pair> v;
+	unsigned int n = 0;
+	vector<spe_pair> vec;
+	for (size_t i = 0; i < this->packs.size(); i++){
+		for (size_t j = 0; j < this->packs.at(i).getPlaces().size(); j++){
+			if (places_map.count(this->packs.at(i).getPlaces().at(j)) > 0)
+				places_map[this->packs.at(i).getPlaces().at(j)] += 1;
+			else
+				places_map[this->packs.at(i).getPlaces().at(j)] = 1;
+		}
+	}
+	copy(places_map.begin(), places_map.end(), back_inserter<vector<spe_pair>>(v));
+	sort(v.begin(), v.end(), [](const spe_pair &pair1, const spe_pair &pair2){
+		if (pair1.second != pair2.second)
+			return pair1.second > pair2.second;
+		return pair1.first < pair2.first;
+	});
+	cout << "Quantos locais pretende visualizar? ";
+	cin >> n;
+	cin.clear();
+	cin.ignore(1000, '\n');
+	if (n > v.size())
+		cout << "Numero invalido" << endl;
+	else {
+		copy(v.begin(), v.begin() + n, back_inserter(vec));
+	}
+	return vec;
+}
+
+// Already tested, working fine
+void Agency::show_most_visited_places(){
+	vector<spe_pair> v = get_most_visited_places();
+	for (size_t i = 0; i < v.size(); i++)
+		cout << "#" << i + 1 << ": " << v.at(i).first << endl;
+}
+
+void Agency::show_recommended_packs(){
+	string place = "";
+	int id = 0, idx = -1;
+	bool found = false;
+	vector<spe_pair> most_visited_places = get_most_visited_places();
+	vector<string> client_places;
+	for (Client client: this->clients){
+
+		for (size_t i = 0; i < client.getBought_packets().size(); i++){
+			for (size_t j = 0; j < this->packs.size(); j++){
+				if (this->packs.at(j).getId() == client.getBought_packets().at(i))
+					for (string place: this->packs.at(j).getPlaces())
+						client_places.push_back(place);
+			}
+		}
+		place = get_first_not_in(client_places, most_visited_places);
+		cout << place << endl;
+		if (place == "None")
+			cout << client.getName() << ": Nenhuma recomendaçao disponivel" << endl;
+		else {
+			for (size_t i = 0; i < this->packs.size(); i++){
+				for (size_t j = 0; j < this->packs.at(i).getPlaces().size(); j++){
+					if (this->packs.at(i).getPlaces().at(j) == place){
+						id = this->packs.at(i).getId();
+						found = true;
+						break;
+					}
+				}
+				if (found)
+					break;
+			}
+			cout << client.getName() <<  ": " << id << endl;
+		}
+		client_places.clear();
+	}
 }

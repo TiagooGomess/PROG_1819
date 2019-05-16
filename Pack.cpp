@@ -7,6 +7,18 @@
 
 using namespace std;
 
+Pack::Pack(){
+    vector<string> v;
+    Date date("2019/01/01");
+    this->id = 0;
+    this->places = v;
+    this->beginning_date = date;
+    this->end_date = date;
+    this->price_per_person = 0.0;
+    this->max_num_people = 0;
+    this->already_sold = 0;
+}
+
 Pack::Pack(int id, vector<string> places, Date beginning_date, Date end_date, double price_per_person, unsigned int max_num_people, unsigned int already_sold){
     this->id = id;
     this->places = places;
@@ -79,6 +91,6 @@ ostream& operator<<(ostream& out, const Pack & pack){
     for (size_t i = 0; i < pack.places.size(); i++)
         temp += pack.places.at(i) + ", ";
     temp = temp.substr(0, temp.size()-2);
-    out << temp << "  /  " << pack.beginning_date << "  /  " << pack.end_date << "  /  " << to_string(pack.price_per_person) << "  /  " << to_string(pack.max_num_people) << "  ";
+    out << temp << "  /  " << pack.beginning_date << "  /  " << pack.end_date << "  /  " << to_string(pack.price_per_person) << "  /  " << to_string(pack.max_num_people) << "  /  " << to_string(pack.already_sold) << "  ";
     return out;
 }
