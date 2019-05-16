@@ -397,8 +397,7 @@ void Agency::change_pack(){
 
 }
 
-// Not Tested
-// Need to work on the 'front-end'/formatting of the text
+
 void Agency::show_specific_client() const{
 	string nif = "";
 	int idx = -1;
@@ -411,20 +410,40 @@ void Agency::show_specific_client() const{
 	if (idx == -1)
 		cout << "Cliente nao encontrado" << endl;
 	else {
-		cout << this->clients.at(idx) << endl;
+		cout << "[Name]: " << this->clients.at(idx).getName() << endl;
+		cout << "[NIF]: " << this->clients.at(idx).getNif() << endl;
+		cout << "[Number of people on the household]: " << this->clients.at(idx).getFamily_size() << endl;
+		cout << "[Address]: " << this->clients.at(idx).getAddress() << endl;
+		cout << "[List of purchased packages]: ";
+		for (int j = 0; j < this->clients.at(idx).getBought_packets().size() - 1; j++) {
+			cout << this->clients.at(idx).getBought_packets().at(j) << " ; ";
+		}
+		// Adds the last element of the vector list_of_purchased_packages; I did this to avoid the ';' in the end of the identifiers pack's list
+		cout << this->clients.at(idx).getBought_packets().at(this->clients.at(idx).getBought_packets().size() - 1);
 	}
 }
 
 // Same as the one above
 void  Agency::show_all_clients() const {
-	for (size_t i = 0; i < this->clients.size(); i++)
-		cout << this->clients.at(i) << endl;
+	for (size_t i = 0; i < this->clients.size(); i++) {
+		cout << "[Name]: " << this->clients.at(i).getName() << endl;
+		cout << "[NIF]: " << this->clients.at(i).getNif() << endl;
+		cout << "[Number of people on the household]: " << this->clients.at(i).getFamily_size() << endl;
+		cout << "[Address]: " << this->clients.at(i).getAddress() << endl;
+		cout << "[List of purchased packages]: ";
+		for (int j = 0; j < this->clients.at(i).getBought_packets().size() - 1; j++) {
+			cout << this->clients.at(i).getBought_packets().at(j) << " ; ";
+		}
+		// Adds the last element of the vector list_of_purchased_packages; I did this to avoid the ';' in the end of the identifiers pack's list
+		cout << this->clients.at(i).getBought_packets().at(this->clients.at(i).getBought_packets().size() - 1);
+		cout << "\n\n";
+	}
 }
 
 // Same
 void Agency::show_all_packs() const{
 	for (size_t i = 0; i < this->packs.size(); i++)
-	cout << this->packs.at(i) << endl;
+		cout << this->packs.at(i) << endl;
 }
 
 // Same
