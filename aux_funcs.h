@@ -29,3 +29,5 @@ string get_first_not_in(vector<string> places, vector<spe_pair> target_places);
 bool is_valid(string NIF);
 
 bool is_leap_year(unsigned int year);
+
+bool is_valid_address(string add);

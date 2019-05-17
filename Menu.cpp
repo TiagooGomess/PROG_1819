@@ -11,7 +11,7 @@ void main_menu(Agency agency);
 
 // Menu de gestão de clientes
 void client_management(Agency agency) {
-	int option;
+	int option, var;
 	while(true){
 		cout << "\n\n[1]: Adicionar cliente\n";
 		cout << "[2]: Modificar cliente\n";
@@ -36,14 +36,26 @@ void client_management(Agency agency) {
 		else if (option == 1) {
 			agency.create_client();
 			agency.update_clients_file();
+			cout << "Pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 2) {
 			agency.change_client();
 			agency.update_clients_file();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 3) {
 			agency.remove_client();
 			agency.update_clients_file();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		cout << "\n\n";
 	}
@@ -51,7 +63,7 @@ void client_management(Agency agency) {
 
 // Menu de gestao de packs
 void packs_management(Agency agency) {
-	int option;
+	int option, var;
 	while(true){
 		cout << "\n\n[1]: Adicionar pacote\n";
 		cout << "[2]: Modificar pacote\n";
@@ -77,19 +89,35 @@ void packs_management(Agency agency) {
 		else if (option == 1) {
 			agency.create_pack();
 			agency.update_packs_file();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 2) {
 			agency.change_pack();
 			agency.update_packs_file();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 3) {
 			agency.remove_pack();
 			agency.update_packs_file();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 4) {
 			agency.buy_pack();
 			agency.update_packs_file();
 			agency.update_clients_file();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		cout << "\n\n";
 	}
@@ -97,7 +125,7 @@ void packs_management(Agency agency) {
 
 // Menu de visualizaçao de informaçao
 void information_visualization(Agency agency) {
-	int option;
+	int option, var;
 	while(true){
 		cout << "\n\n[1]: Mostrar um cliente\n";
 		cout << "[2]: Mostrar todos os clientes\n\n";
@@ -127,27 +155,59 @@ void information_visualization(Agency agency) {
 		}
 		else if (option == 1) {
 			agency.show_specific_client();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 2) {
 			agency.show_all_clients();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 3) {
 			agency.show_all_packs();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 4) {
 			agency.show_packs_between_dates();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 5) {
 			agency.show_all_packs_related_to_place();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 6) {
 			agency.show_packs_between_dates_and_related_to_place();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 7) {
 			agency.show_packs_sold_to_all_clients();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 8) {
 			agency.show_sold_packs_info();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		cout << "\n\n";
 		cout << "-----------------------------------------------------\n";
@@ -156,7 +216,7 @@ void information_visualization(Agency agency) {
 
 // Menu de dados estatisticos
 void estatisticas(Agency agency) {
-	int option;
+	int option, var;
 	while(true){
 		cout << "\n\n[1]: Obter o nome dos N locais mais visitados\n";
 		cout << "[2]: Mostrar pack recomendado para cada cliente\n";
@@ -179,9 +239,17 @@ void estatisticas(Agency agency) {
 		}
 		else if (option == 1) {
 			agency.show_most_visited_places();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		else if (option == 2) {
 			agency.show_recommended_packs();
+			cout << "pressione ctrl-Z para voltar ao menu" << endl;
+			cin >> var;
+			cin.clear();
+			cin.ignore(1000, '\n');
 		}
 		cout << "\n\n";
 	}

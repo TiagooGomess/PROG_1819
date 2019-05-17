@@ -228,8 +228,8 @@ void Agency::create_client(){
 	do {
 		cout << "Qual a morada? ";
 		getline(cin, address);
-		add = Address(address);
-	} while(!add.isValid());
+	} while(!is_valid_address(address));
+	add = Address(address);
 	Client client(name, nif, family_size, add);
 	this->clients.push_back(client);
 }
@@ -315,8 +315,8 @@ void Agency::change_client(){
 					do {
 						cout << "Qual a morada? ";
 						getline(cin, option);
-						add = Address(option);
-					} while(!add.isValid());
+					} while(!is_valid_address(option));
+					add = Address(option);
 					this->clients.at(idx).setAddress(add);
 					break;
 				default:
@@ -684,6 +684,7 @@ void Agency::show_packs_sold_to_all_clients() const{
 // Metodo para comprar um pack por um cliente
 void Agency::buy_pack(){
 	string nif = "";
+	bool already_bought = false;
 	int idx = -1, id, id_idx = -1;
 	cout << "Qual o NIF do cliente? ";
 	getline(cin, nif);
@@ -698,34 +699,42 @@ void Agency::buy_pack(){
 		cin >> id;
 		cin.clear();
 		cin.ignore(1000, '\n');
-		for (size_t i = 0; i < this->packs.size(); i++){
-			if (this->packs.at(i).getId() == id)
-				id_idx = i;
+		for (size_t i = 0; i < this->clients.at(idx).getBought_packets().size(); i++){
+			if (id == this->clients.at(idx).getBought_packets().at(i))
+				cout << "O cliente ja comprou esse pack" << endl;
+				already_bought = true;
 		}
-		if (id_idx == -1)
-			cout << "Pack nao encontrado" << endl;
-		else {
-			if (this->packs.at(idx).getId() < 0)
-				cout << "Pack Indisponivel." << endl;
-			else{
-				if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() - this->clients.at(idx).getFamily_size() >= 0){
-					// Atualiza lista de pacotes comprados pelo cliente
-					vector<int> ids = this->clients.at(idx).getBought_packets();
-					ids.push_back(this->packs.at(id_idx).getId());
-					this->clients.at(idx).setBought_packets(ids);
+		if (!already_bought){
+			for (size_t i = 0; i < this->packs.size(); i++){
+				if (this->packs.at(i).getId() == id)
+					id_idx = i;
+			}
+			if (id_idx == -1)
+				cout << "Pack nao encontrado" << endl;
+			else {
+				if (this->packs.at(idx).getId() < 0)
+					cout << "Pack Indisponivel." << endl;
+				else{
+					if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() - this->clients.at(idx).getFamily_size() >= 0){
+						// Atualiza lista de pacotes comprados pelo cliente
+						vector<int> ids = this->clients.at(idx).getBought_packets();
+						ids.push_back(this->packs.at(id_idx).getId());
+						this->clients.at(idx).setBought_packets(ids);
 
-					// Atualiza total de compras do cliente
-					this->clients.at(idx).setTotal_buys(this->clients.at(idx).getTotal_buys() + this->clients.at(idx).getFamily_size() * this->packs.at(id_idx).getPricePerPerson());
+						// Atualiza total de compras do cliente
+						this->clients.at(idx).setTotal_buys(this->clients.at(idx).getTotal_buys() + this->clients.at(idx).getFamily_size() * this->packs.at(id_idx).getPricePerPerson());
 
-					// Atualiza vagas do pack
-					this->packs.at(id_idx).setAlreadySold(this->packs.at(id_idx).getAlreadySold() + this->clients.at(idx).getFamily_size());
-					if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() == 0)
-						this->packs.at(id_idx).setId(-this->packs.at(idx).getId());
+						// Atualiza vagas do pack
+						this->packs.at(id_idx).setAlreadySold(this->packs.at(id_idx).getAlreadySold() + this->clients.at(idx).getFamily_size());
+						if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() == 0)
+							this->packs.at(id_idx).setId(-this->packs.at(idx).getId());
+					}
+					else
+						cout << "Nao ha vagas disponiveis" << endl;
 				}
-				else
-					cout << "Nao ha vagas disponiveis" << endl;
 			}
 		}
+		already_bought = false;
 	}
 }
 

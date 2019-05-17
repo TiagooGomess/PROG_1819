@@ -122,3 +122,11 @@ bool is_leap_year(unsigned int year){
         return true;
     return false;
 }
+
+bool is_valid_address(string add){
+    vector<string> address_fields = separate_string(add, '/');
+    for (size_t i = 0; i < address_fields.at(1).size(); i++)
+        if(!isdigit(address_fields.at(1)[i]))
+            return false;
+    return true;
+}
