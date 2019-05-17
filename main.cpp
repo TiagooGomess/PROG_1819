@@ -13,9 +13,10 @@
 using namespace std;
 
 int main(){
+
     Agency agency("agency.txt");
 
-	//main_menu(agency);
+	main_menu(agency);
     
 	return 0;
 }

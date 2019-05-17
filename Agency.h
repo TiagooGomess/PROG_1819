@@ -25,6 +25,7 @@ private:
 	string clients_filename;
 	string packs_filename;
 	vector<spe_pair> get_most_visited_places();
+	int last_pack_id;
 
 public:
 	Agency(string fileName);
@@ -56,6 +57,7 @@ public:
 	void change_client();
 	void create_pack();
 	void change_pack();
+	void remove_pack();
 	void show_specific_client() const;
 	void show_all_clients() const;
 	void show_all_packs() const;

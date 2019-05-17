@@ -102,3 +102,23 @@ string get_first_not_in(vector<string> places, vector<spe_pair> target_places){
     }
     return "None";
 }
+
+bool is_valid(string NIF){
+    if (NIF.size() != 9)
+        return false;
+    for (size_t i = 0; i < NIF.size(); i++){
+        if(!isdigit(NIF[i]))
+            return false;
+    }
+    return true;
+}
+
+bool is_leap_year(unsigned int year){
+    if (year % 400 == 0)
+        return true;
+    else if (year % 100 == 0)
+        return false;
+    else if (year % 4 == 0)
+        return true;
+    return false;
+}

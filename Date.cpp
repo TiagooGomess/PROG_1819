@@ -74,3 +74,27 @@ bool operator<(const Date first_date, const Date second_date){
         }
     }
 }
+
+unsigned int Date::numDays(unsigned int m, unsigned int y) const{
+    if (is_leap_year(y) && month == 2)
+        return 29;
+    else if (!is_leap_year(y) && month == 2)
+        return 28;
+    else {
+        switch (m){
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                return 31;
+                break;
+            case 4: case 6: case 9: case 11:
+                return 30;
+                break; 
+        }
+    }
+}
+
+bool Date::isValid() const{
+    unsigned int num_of_days = numDays(this->month, this->year);
+    if (this->month > 0 && this->month < 13 && this->day > 0 && this->day <= num_of_days)
+        return true;
+    return false;
+}

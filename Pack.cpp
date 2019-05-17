@@ -86,11 +86,11 @@ void Pack::setAlreadySold(unsigned int already_sold){
 }
 
 ostream& operator<<(ostream& out, const Pack & pack){
-    out << pack.id << "  /  ";
+    out << "[Id]: " << pack.id << endl;
     string temp = "";
     for (size_t i = 0; i < pack.places.size(); i++)
         temp += pack.places.at(i) + ", ";
     temp = temp.substr(0, temp.size()-2);
-    out << temp << "  /  " << pack.beginning_date << "  /  " << pack.end_date << "  /  " << to_string(pack.price_per_person) << "  /  " << to_string(pack.max_num_people) << "  /  " << to_string(pack.already_sold) << "  ";
+    out << "[Locais a visitar]: " << temp << endl << "[Data de inicio]: " << pack.beginning_date << endl << "[Data de fim]: " << pack.end_date << endl << "[Preco por pessoa]: " << to_string(pack.price_per_person) << endl << "[Numero total de vagas]: " << to_string(pack.max_num_people) << endl << "[Numero de vagas ja ocupadas}: " << to_string(pack.already_sold) << endl;
     return out;
 }

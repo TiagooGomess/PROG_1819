@@ -12,6 +12,7 @@
 
 using namespace std;
 
+// Construtor
 Agency::Agency(string filename) {
 	ifstream f;
 	string field = "", clients_filename = "", packs_filename = "";
@@ -58,6 +59,7 @@ Agency::Agency(string filename) {
 	string places, beg_date, e_date, last_id;
 	if (f.is_open()) {
 		getline(f, last_id);
+		this->last_pack_id = stoi(last_id);
 		while (!f.eof()) {
 			f >> id;
 			f.clear();
@@ -145,6 +147,7 @@ ostream& operator<<(ostream& out, const Agency& agency) {
 	out << agency.name << "  |  " << agency.nif << "  |  " << agency.URL << "  |  " << agency.address << "  ";
 }
 
+// Metodo para atualizar o ficheiro de clientes
 bool Agency::update_clients_file() const{
 	ofstream f;
 	string ids = "";
@@ -167,6 +170,7 @@ bool Agency::update_clients_file() const{
 	return false;
 }
 
+// Metodo para atualizar o ficheiro de packs
 bool Agency::update_packs_file() const{
 	ofstream f;
 	string places_str = "";
@@ -194,27 +198,44 @@ bool Agency::update_packs_file() const{
 	return false;
 }
 
-
-// Not Tested
+// Metodo para criar um cliente
 void Agency::create_client(){
 	string name, nif, address;
 	unsigned short int family_size;
+	bool valid = false;
 	cout << "Qual o nome do cliente? ";
 	getline(cin, name);
-	cout << "Qual o NIF do cliente? ";
-	getline(cin, nif);
-	cout << "Quantas pessoas estão no agregado familiar? ";
-	cin >> family_size;
-	cin.clear();
-	cin.ignore(1000, '\n');
-	cout << "Qual a morada? ";
-	getline(cin, address);
-	Address add(address);
+	do{
+		cout << "Qual o NIF do cliente? ";
+		getline(cin, nif);
+	} while(!is_valid(nif));
+	do {
+		cout << "Quantas pessoas estão no agregado familiar? ";
+		cin >> family_size;
+		if(cin.fail()){
+			cout << "Invalido. Introduza de novo." << endl;
+			valid = false;
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+		else {
+			valid = true;
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+	} while(!valid);
+	Address add;
+	do {
+		cout << "Qual a morada? ";
+		getline(cin, address);
+		add = Address(address);
+	} while(!add.isValid());
 	Client client(name, nif, family_size, add);
 	this->clients.push_back(client);
 }
 
-// Not Tested
+
+// Metodo para remover um cliente
 void Agency::remove_client(){
 	string nif;
 	int idx = -1;
@@ -231,9 +252,10 @@ void Agency::remove_client(){
 	}
 }
 
-// Not Tested
+// Metodo para alterar a informaçao de um cliente
 void Agency::change_client(){
 	string nif;
+	bool valid = false;
 	int idx = -1;
 	cout << "Qual o NIF do cliente que pretende alterar? ";
 	getline(cin, nif);
@@ -265,21 +287,36 @@ void Agency::change_client(){
 					this->clients.at(idx).setName(option);
 					break;
 				case 2:
-					cout << "Qual o novo NIF? ";
-					getline(cin, option);
+					do{
+						cout << "Qual o novo NIF do cliente? ";
+						getline(cin, nif);
+					} while(!is_valid(nif));
 					this->clients.at(idx).setNif(option);
 					break;
 				case 3:
-					cout << "Quantas pessoas tem o cliente no seu agregado familiar? ";
-					cin >> family_size;
-					cin.clear();
-					cin.ignore(1000, '\n');
+						do {
+							cout << "Quantas pessoas estão no agregado familiar? ";
+							cin >> family_size;
+							if(cin.fail()){
+								cout << "Invalido. Introduza de novo." << endl;
+								valid = false;
+								cin.clear();
+								cin.ignore(1000, '\n');
+							}
+							else {
+								valid = true;
+								cin.clear();
+								cin.ignore(1000, '\n');
+							}
+						} while(!valid);
 					this->clients.at(idx).setFamily_size(family_size);
 					break;
 				case 4:
-					cout << "Qual a nova morada? ";
-					getline(cin, option);
-					add = Address(option);
+					do {
+						cout << "Qual a morada? ";
+						getline(cin, option);
+						add = Address(option);
+					} while(!add.isValid());
 					this->clients.at(idx).setAddress(add);
 					break;
 				default:
@@ -290,39 +327,64 @@ void Agency::change_client(){
 
 }
 
-// Not Tested
-// TODO: Verificar se o id ja existe ou nao
+// Metodo para criar um pacote
 void Agency::create_pack(){
-	int id;
+	int id = this->last_pack_id + 1;;
 	unsigned int num_spots;
 	double price_p_person;
 	string places, date;
-	cout << "Qual o id do pack? ";
-	cin >> id;
-	cin.clear();
-	cin.ignore(1000, '\n');
 	cout << "Quais os lugares a visitar? (separados por virgulas)";
 	getline(cin, places);
 	vector<string> places_vector = separate_string(places, ',');
-	cout << "Qual a data de inicio? ";
-	getline(cin, date);
-	Date beg_date(date);
-	cout << "Qual a data de fim? ";
-	getline(cin, date);
-	Date end_date(date);
-	cout << "Qual o preço por pessoa? ";
-	cin >> price_p_person;
-	cin.clear();
-	cin.ignore(1000, '\n');
-	cout << "Quantas sao as vagas totais? ";
-	cin >> num_spots;
-	cin.clear();
-	cin.ignore(1000, '\n');
+	Date beg_date;
+	do {
+		cout << "Qual a data de inicio? ";
+		getline(cin, date);
+		beg_date = Date(date);
+	} while(!beg_date.isValid());
+	Date end_date;
+	do {
+		cout << "Qual a data de fim? ";
+		getline(cin, date);
+		end_date = Date(date);
+	} while(!end_date.isValid());
+	bool valid = false;
+	do {
+		cout << "Qual o preço por pessoa? ";
+		cin >> price_p_person;
+		if(cin.fail()){
+			cout << "Invalido. Introduza de novo." << endl;
+			valid = false;
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+		else {
+			valid = true;
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+	} while(!valid);
+	valid = false;
+	do {
+		cout << "Quantas sao as vagas totais? ";
+		cin >> num_spots;
+		if(cin.fail()){
+			cout << "Invalido. Introduza de novo." << endl;
+			valid = false;
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+		else {
+			valid = true;
+			cin.clear();
+			cin.ignore(1000, '\n');
+		}
+	} while(!valid);
 	Pack pack(id, places_vector, beg_date, end_date, price_p_person, num_spots, 0);
 	this->packs.push_back(pack);
 }
 
-// Not Tested
+// Metodo para alterar a informaçao de um pacote
 void Agency::change_pack(){
 	int id, idx = -1;
 	cout << "Qual o id do pack que pretende alterar? ";
@@ -342,66 +404,105 @@ void Agency::change_pack(){
 		unsigned int choice = 0;
 		do {
 			cout << "Que parametro do pack deseja alterar? " << endl;
-			cout << " [1] Id\n [2] Locais a visitar\n [3] Data de inicio\n [4] Data de fim\n [5] Preco por pessoa\n [6] Número total de vagas\n [0] Voltar\n";
+			cout << " [1] Locais a visitar\n [2] Data de inicio\n [3] Data de fim\n [4] Preco por pessoa\n [5] Número total de vagas\n [0] Voltar\n";
 			cin >> choice;
 			cin.clear();
 			cin.ignore(1000, '\n');
 			if(choice == 0){
 				break;
 			}
-			int new_id;
+			int new_id, num_spots;
 			double price;
-			string option = "";
+			bool valid = false;
+			string option = "", date = "";
 			Date end_date, beg_date;
 			switch(choice){
 				case 1:
-					cout << "Qual o novo id? ";
-					cin >> new_id;
-					cin.clear();
-					cin.ignore(1000, '\n');
-					this->packs.at(idx).setId(new_id);
-					break;
-				case 2:
 					cout << "Quais os novos locais a visitar (separados por virgulas) ? ";
 					getline(cin, option);
 					this->packs.at(idx).setPlaces(separate_string(option, ','));
 					break;
-				case 3:
-					cout << "Qual a nova data de inicio? ";
-					getline(cin, option);
-					beg_date = Date(option);
-					this->packs.at(idx).setBeginningDate(beg_date);
+				case 2:
+					do {
+						cout << "Qual a nova data de inicio? ";
+						getline(cin, date);
+						beg_date = Date(date);
+					} while(!beg_date.isValid());
 					break;
-				case 4:
-					cout << "Qual a nova data de fim? ";
-					getline(cin, option);
-					end_date = Date(option);
+				case 3:
+					do {
+						cout << "Qual a nova data de fim? ";
+						getline(cin, date);
+						end_date = Date(date);
+					} while(!end_date.isValid());
 					this->packs.at(idx).setEndDate(end_date);
 					break;
-				case 5:
-					cout << "Qual o novo preco por pessoa? ";
-					cin >> price;
-					cin.clear();
-					cin.ignore(1000, '\n');
+				case 4:
+					do {
+						cout << "Qual o novo preço por pessoa? ";
+						cin >> price;
+						if(cin.fail()){
+							cout << "Invalido. Introduza de novo." << endl;
+							valid = false;
+							cin.clear();
+							cin.ignore(1000, '\n');
+						}
+						else {
+							valid = true;
+							cin.clear();
+							cin.ignore(1000, '\n');
+						}
+					} while(!valid);
 					this->packs.at(idx).setPricePerPerson(price);
+					valid = false;
 					break;
-				case 6:
-					cout << "Qual o novo numero total de vagas? ";
-					cin >> new_id;
-					cin.clear();
-					cin.ignore(1000, '\n');
-					this->packs.at(idx).setMaxNumPeople(new_id);
+				case 5:
+					do {
+						cout << "Qual é o novo total de vagas? ";
+						cin >> num_spots;
+						if(cin.fail()){
+							cout << "Invalido. Introduza de novo." << endl;
+							valid = false;
+							cin.clear();
+							cin.ignore(1000, '\n');
+						}
+						else {
+							valid = true;
+							cin.clear();
+							cin.ignore(1000, '\n');
+						}
+					} while(!valid);
+					this->packs.at(idx).setMaxNumPeople(num_spots);
 					break;
 				default:
 					cout << "Opcao inexistente. Introduza de novo." << endl;
 			}
 		} while(running);
 	}
+}
+
+// Metodo para remover/tornar indisponivel um pacote
+void Agency::remove_pack(){
+	int id, idx = -1;
+	cout << "Qual o id do pack que pretende remover? ";
+	cin >> id;
+	cin.clear();
+	cin.ignore(1000, '\n');
+
+	for (size_t i = 0; i < this->packs.size(); i++){
+		if (this->packs.at(i).getId() == id)
+			idx = i;
+	}
+
+	if (idx == -1){
+		cout << "Pack nao encontrado." << endl;
+	} else {
+		this->packs.at(idx).setId(-this->packs.at(idx).getId());
+	}
 
 }
 
-// Not Tested
-// Need to work on the 'front-end'/formatting of the text
+// Metodo para mostrar informaçao sobre um cliente especifico
 void Agency::show_specific_client() const{
 	string nif = "";
 	int idx = -1;
@@ -414,23 +515,43 @@ void Agency::show_specific_client() const{
 	if (idx == -1)
 		cout << "Cliente nao encontrado" << endl;
 	else {
-		cout << this->clients.at(idx) << endl;
+		cout << "[Name]: " << this->clients.at(idx).getName() << endl;
+		cout << "[NIF]: " << this->clients.at(idx).getNif() << endl;
+		cout << "[Number of people on the household]: " << this->clients.at(idx).getFamily_size() << endl;
+		cout << "[Address]: " << this->clients.at(idx).getAddress() << endl;
+		cout << "[List of purchased packages]: ";
+		for (int j = 0; j < this->clients.at(idx).getBought_packets().size() - 1; j++) {
+			cout << this->clients.at(idx).getBought_packets().at(j) << " ; ";
+		}
+		// Adds the last element of the vector list_of_purchased_packages; I did this to avoid the ';' in the end of the identifiers pack's list
+		cout << this->clients.at(idx).getBought_packets().at(this->clients.at(idx).getBought_packets().size() - 1);
 	}
 }
 
-// Same as the one above
+// Metodo para mostrar informaçao de todos os clientes
 void  Agency::show_all_clients() const {
-	for (size_t i = 0; i < this->clients.size(); i++)
-		cout << this->clients.at(i) << endl;
+	for (size_t i = 0; i < this->clients.size(); i++) {
+		cout << "[Nome]: " << this->clients.at(i).getName() << endl;
+		cout << "[NIF]: " << this->clients.at(i).getNif() << endl;
+		cout << "[Numero de pessoas no agregado familiar]: " << this->clients.at(i).getFamily_size() << endl;
+		cout << "[Morada]: " << this->clients.at(i).getAddress() << endl;
+		cout << "[Lista de pacotes comprados]: ";
+		for (int j = 0; j < this->clients.at(i).getBought_packets().size() - 1; j++) {
+			cout << this->clients.at(i).getBought_packets().at(j) << " ; ";
+		}
+		// Adds the last element of the vector list_of_purchased_packages; I did this to avoid the ';' in the end of the identifiers pack's list
+		cout << this->clients.at(i).getBought_packets().at(this->clients.at(i).getBought_packets().size() - 1);
+		cout << "\n\n";
+	}
 }
 
-// Same
+// Metodo para mostrar informaçao de todos os packs
 void Agency::show_all_packs() const{
 	for (size_t i = 0; i < this->packs.size(); i++)
-	cout << this->packs.at(i) << endl;
+		cout << this->packs.at(i) << endl;
 }
 
-// Same
+// Metodo para mostrar informaçao sobre packs relativos a um dado lugar
 void Agency::show_all_packs_related_to_place() const{
 	string place = "";
 	vector<Pack> target_packs;
@@ -451,7 +572,7 @@ void Agency::show_all_packs_related_to_place() const{
 	}
 }
 
-// Same
+// Metodo para mostrar informaçao relativa a packs entre duas datas
 void Agency::show_packs_between_dates() const{
 	Date beg_date, end_date;
 	vector<Pack> target_packs;
@@ -473,7 +594,7 @@ void Agency::show_packs_between_dates() const{
 			cout << target_packs.at(i) << endl;
 }
 
-// Same
+// Metodo para mostrar informaçao sobre packs reltivos a um certo lugar, entre duas datas
 void Agency::show_packs_between_dates_and_related_to_place() const{
 	Date beg_date, end_date;
 	string date = "", place = "";
@@ -505,7 +626,7 @@ void Agency::show_packs_between_dates_and_related_to_place() const{
 	}
 }
 
-// Same
+// Metodo para mostrar informaçao relativa a packs vendidos a um cliente especifico
 void Agency::show_packs_sold_to_client() const{
 	string nif = "";
 	int idx = -1;
@@ -535,7 +656,7 @@ void Agency::show_packs_sold_to_client() const{
 	}
 }
 
-// Same
+// Metodo para mostrar informaçao sobre todos os packs vendidos
 void Agency::show_packs_sold_to_all_clients() const{
 	vector<int> all_ids;
 	vector<Pack> target_packs;
@@ -560,7 +681,7 @@ void Agency::show_packs_sold_to_all_clients() const{
 			cout << target_packs.at(i) << endl;
 }
 
-// Same
+// Metodo para comprar um pack por um cliente
 void Agency::buy_pack(){
 	string nif = "";
 	int idx = -1, id, id_idx = -1;
@@ -584,27 +705,31 @@ void Agency::buy_pack(){
 		if (id_idx == -1)
 			cout << "Pack nao encontrado" << endl;
 		else {
-			if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() - this->clients.at(idx).getFamily_size() >= 0){
-				// Atualiza lista de pacotes comprados pelo cliente
-				vector<int> ids = this->clients.at(idx).getBought_packets();
-				ids.push_back(this->packs.at(id_idx).getId());
-				this->clients.at(idx).setBought_packets(ids);
+			if (this->packs.at(idx).getId() < 0)
+				cout << "Pack Indisponivel." << endl;
+			else{
+				if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() - this->clients.at(idx).getFamily_size() >= 0){
+					// Atualiza lista de pacotes comprados pelo cliente
+					vector<int> ids = this->clients.at(idx).getBought_packets();
+					ids.push_back(this->packs.at(id_idx).getId());
+					this->clients.at(idx).setBought_packets(ids);
 
-				// Atualiza total de compras do cliente
-				this->clients.at(idx).setTotal_buys(this->clients.at(idx).getTotal_buys() + this->clients.at(idx).getFamily_size() * this->packs.at(id_idx).getPricePerPerson());
+					// Atualiza total de compras do cliente
+					this->clients.at(idx).setTotal_buys(this->clients.at(idx).getTotal_buys() + this->clients.at(idx).getFamily_size() * this->packs.at(id_idx).getPricePerPerson());
 
-				// Atualiza vagas do pack
-				this->packs.at(id_idx).setAlreadySold(this->packs.at(id_idx).getAlreadySold() + this->clients.at(idx).getFamily_size());
-				if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() == 0)
-					this->packs.at(id_idx).setId(-this->packs.at(idx).getId());
+					// Atualiza vagas do pack
+					this->packs.at(id_idx).setAlreadySold(this->packs.at(id_idx).getAlreadySold() + this->clients.at(idx).getFamily_size());
+					if (this->packs.at(id_idx).getMaxNumPeople() - this->packs.at(id_idx).getAlreadySold() == 0)
+						this->packs.at(id_idx).setId(-this->packs.at(idx).getId());
+				}
+				else
+					cout << "Nao ha vagas disponiveis" << endl;
 			}
-			else
-				cout << "Nao ha vagas disponiveis" << endl;
 		}
 	}
 }
 
-// Same
+// Metodo para mostrar informaçao sobre o total de packs vendidos e o valor destes
 void Agency::show_sold_packs_info() const{
 	unsigned int sum = 0, total_money = 0;
 	for (size_t i = 0; i < this->packs.size(); i++){
@@ -614,7 +739,7 @@ void Agency::show_sold_packs_info() const{
 	cout << "Total de packs vendidos: " << sum << endl << "Valor total dos pacotes vendidos: " << total_money << endl;
 }
 
-// Already Tested, working fine
+// Metodo para obter os N locais mais visitados
 vector<spe_pair> Agency::get_most_visited_places(){
 	map<string, int> places_map;
 	vector<spe_pair> v;
@@ -646,13 +771,14 @@ vector<spe_pair> Agency::get_most_visited_places(){
 	return vec;
 }
 
-// Already tested, working fine
+// Metodo para mostrar os locais mais visitados
 void Agency::show_most_visited_places(){
 	vector<spe_pair> v = get_most_visited_places();
 	for (size_t i = 0; i < v.size(); i++)
 		cout << "#" << i + 1 << ": " << v.at(i).first << endl;
 }
 
+// Metodo para mostrar os packs recomendados a cada cliente
 void Agency::show_recommended_packs(){
 	string place = "";
 	int id = 0, idx = -1;
@@ -684,7 +810,7 @@ void Agency::show_recommended_packs(){
 				if (found)
 					break;
 			}
-			cout << client.getName() <<  ": " << id << endl;
+			cout << client.getName() <<  ": Pack " << id << endl;
 		}
 		client_places.clear();
 	}

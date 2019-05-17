@@ -25,3 +25,7 @@ bool is_in(int t, vector<int> v);
 bool compare_packs(Pack pack1, Pack pack2);
 
 string get_first_not_in(vector<string> places, vector<spe_pair> target_places);
+
+bool is_valid(string NIF);
+
+bool is_leap_year(unsigned int year);
