@@ -23,5 +23,5 @@ Tiago Gomes
 123456789
 1
 Rua Sem Fim  /  200  /  5Esq  /  1200-001  /  Lisboa  
-1
-0
+1; 1; 1
+600

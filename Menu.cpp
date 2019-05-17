@@ -22,7 +22,7 @@ void client_management(Agency agency) {
 				cin.clear();
 				cin.ignore(1000, '\n');
 			}
-			cout << "Insira um numero [0-3] para escolher uma op��o: ";
+			cout << "Insira um numero [0-3] para escolher uma opcao: ";
 			cin >> option;
 			cin.clear();
 			cin.ignore(1000, '\n');
@@ -63,7 +63,7 @@ void packs_management(Agency agency) {
 				cin.clear();
 				cin.ignore(1000, '\n');
 			}
-			cout << "Insira um numero [0-4] para escolher uma op��o: ";
+			cout << "Insira um numero [0-4] para escolher uma opcao: ";
 			cin >> option;
 			cin.clear();
 			cin.ignore(1000, '\n');
@@ -114,7 +114,7 @@ void information_visualization(Agency agency) {
 				cin.clear();
 				cin.ignore(1000, '\n');
 			}
-			cout << "Insira um numero [0-8] para escolher uma op��o: ";
+			cout << "Insira um numero [0-8] para escolher uma opcao: ";
 			cin >> option;
 			cin.clear();
 			cin.ignore(1000, '\n');
@@ -166,7 +166,7 @@ void estatisticas(Agency agency) {
 				cin.clear();
 				cin.ignore(1000, '\n');
 			}
-			cout << "Insira um numero [0-2] para escolher uma op��o: ";
+			cout << "Insira um numero [0-2] para escolher uma opcao: ";
 			cin >> option;
 			cin.clear();
 			cin.ignore(1000, '\n');
@@ -204,7 +204,7 @@ void main_menu(Agency agency) {
 				cin.clear();
 				cin.ignore(1000, '\n');
 			}
-			cout << "Insira um numero [0-3] para escolher uma op��o: ";
+			cout << "Insira um numero [0-4] para escolher uma opcao: ";
 			cin >> option;
 			cin.clear();
 			cin.ignore(1000, '\n');

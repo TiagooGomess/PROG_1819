@@ -404,7 +404,7 @@ void Agency::change_pack(){
 		unsigned int choice = 0;
 		do {
 			cout << "Que parametro do pack deseja alterar? " << endl;
-			cout << " [1] Locais a visitar\n [2] Data de inicio\n [3] Data de fim\n [4] Preco por pessoa\n [5] Número total de vagas\n [0] Voltar\n";
+			cout << " [1] Locais a visitar\n [2] Data de inicio\n [3] Data de fim\n [4] Preco por pessoa\n [5] Numero total de vagas\n [0] Voltar\n";
 			cin >> choice;
 			cin.clear();
 			cin.ignore(1000, '\n');
@@ -458,7 +458,7 @@ void Agency::change_pack(){
 					break;
 				case 5:
 					do {
-						cout << "Qual é o novo total de vagas? ";
+						cout << "Qual o novo total de vagas? ";
 						cin >> num_spots;
 						if(cin.fail()){
 							cout << "Invalido. Introduza de novo." << endl;
@@ -763,6 +763,7 @@ vector<spe_pair> Agency::get_most_visited_places(){
 	cin >> n;
 	cin.clear();
 	cin.ignore(1000, '\n');
+	cout << "\n";
 	if (n > v.size())
 		cout << "Numero invalido" << endl;
 	else {
@@ -795,9 +796,8 @@ void Agency::show_recommended_packs(){
 			}
 		}
 		place = get_first_not_in(client_places, most_visited_places);
-		cout << place << endl;
 		if (place == "None")
-			cout << client.getName() << ": Nenhuma recomendaçao disponivel" << endl;
+			cout << client.getName() << ": Nenhuma recomendacao disponivel" << endl;
 		else {
 			for (size_t i = 0; i < this->packs.size(); i++){
 				for (size_t j = 0; j < this->packs.at(i).getPlaces().size(); j++){
