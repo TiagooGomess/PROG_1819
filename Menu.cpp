@@ -19,7 +19,7 @@ void client_management(Agency agency) {
 			cin.clear();
 			cin.ignore(1000, '\n');
 		}
-		cout << "Insira um numero [0-3] para escolher uma opção: ";
+		cout << "Insira um numero [0-3] para escolher uma opï¿½ï¿½o: ";
 		cin >> option;
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -59,7 +59,7 @@ void packs_management(Agency agency) {
 			cin.clear();
 			cin.ignore(1000, '\n');
 		}
-		cout << "Insira um numero [0-4] para escolher uma opção: ";
+		cout << "Insira um numero [0-4] para escolher uma opï¿½ï¿½o: ";
 		cin >> option;
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -109,7 +109,7 @@ void packs_management(Agency agency) {
 //			cin.clear();
 //			cin.ignore(1000, '\n');
 //		}
-//		cout << "Insira um numero [0-9] para escolher uma opção: ";
+//		cout << "Insira um numero [0-9] para escolher uma opï¿½ï¿½o: ";
 //		cin >> option;
 //		cin.clear();
 //		cin.ignore(1000, '\n');
@@ -155,14 +155,14 @@ void packs_management(Agency agency) {
 void estatisticas(Agency agency) {
 	int option;
 	cout << "\n\n[1]: Obter o nome dos N locais mais visitados\n";
-	cout << "[2]: listagem de todos os clientes na qual se indica, para cada cliente, um dos pacotes em que seja visitado um dos N locais mais visitados que ele ainda não visitou\n";
+	cout << "[2]: listagem de todos os clientes na qual se indica, para cada cliente, um dos pacotes em que seja visitado um dos N locais mais visitados que ele ainda nï¿½o visitou\n";
 	cout << "[0]: Menu principal\n\n";
 	do {
 		if (cin.fail()) {
 			cin.clear();
 			cin.ignore(1000, '\n');
 		}
-		cout << "Insira um numero [0-2] para escolher uma opção: ";
+		cout << "Insira um numero [0-2] para escolher uma opï¿½ï¿½o: ";
 		cin >> option;
 		cin.clear();
 		cin.ignore(1000, '\n');
@@ -198,7 +198,7 @@ void main_menu(Agency agency) {
 			cin.clear();
 			cin.ignore(1000, '\n');
 		}
-		cout << "Insira um numero [0-3] para escolher uma opção: ";
+		cout << "Insira um numero [0-3] para escolher uma opï¿½ï¿½o: ";
 		cin >> option;
 		cin.clear();
 		cin.ignore(1000, '\n');
